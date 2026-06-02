@@ -1,0 +1,23 @@
+FROM ghcr.io/ublue-os/arch-toolbox:latest@sha256:fce942ae5a6f8e7aaf3fbe035eb42463db3f2b15422a4d8b414ad041d93e7f0f AS base
+
+# Install most of the things steambox installs+my things
+
+# Create user for AUR
+
+# Install from AUR
+
+# Destroy AUR user
+
+# Optimize
+
+# Use chunkah
+
+# Export the image
+
+# Take the image from Optimize
+
+# Swap the portal
+
+# Use chunkah
+
+# Export the image

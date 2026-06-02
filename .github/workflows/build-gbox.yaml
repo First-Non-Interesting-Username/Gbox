@@ -1,0 +1,41 @@
+name: Build Gbox
+
+on: 
+    schedule:
+    - cron: '0 16 * * *'
+    workflow_dispatch:
+
+jobs: 
+    build-push:
+        name: Build images and push to ghcr.io
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+            id-token: write
+        strategy:
+            fail-fast: false
+            matrix:
+                image_name: [gbox-plasma, gbox-gnome]
+        
+        steps:
+            - name: checkout
+              uses: actions/checkout@v6
+            
+            - name: Matrix Variables
+              run: |
+                echo "IMAGE_NAME=${{ matrix.image_name }}" >> $GITHUB_ENV
+            
+            - name: Generate tags
+            # Date
+            # latest
+
+            - name: Generate labels
+
+            - name: Build image
+
+            - name: Login to ghcr.io
+
+            - name: Sign image with cosign
+
+            - name: Push to ghcr.io
