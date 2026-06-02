@@ -1,23 +1,123 @@
+# Using arch as a base, because of package selection
 FROM ghcr.io/ublue-os/arch-toolbox:latest@sha256:fce942ae5a6f8e7aaf3fbe035eb42463db3f2b15422a4d8b414ad041d93e7f0f AS base
 
-# Install most of the things steambox installs+my things
+RUN pacman -Syu \
+        lib32-vulkan-radeon \
+        libva-mesa-driver \
+        vulkan-radeon \
+        vulkan-mesa-layers \
+        lib32-vulkan-mesa-layers \
+        lib32-libnm \
+        openal \
+        pipewire \
+        pipewire-pulse \
+        pipewire-alsa \
+        pipewire-jack \
+        wireplumber \
+        lib32-pipewire \
+        lib32-pipewire-jack \
+        lib32-libpulse \
+        lib32-openal \
+        nano \
+        yad \
+        xdg-user-dirs \
+        xdotool \
+        xorg-xwininfo \
+        wmctrl \
+        wxwidgets-gtk3 \
+        libbsd \
+        noto-fonts-cjk \
+        glibc-locales \
+        jdk21-openjdk \
+        --noconfirm && \
+    # Installed separately, so they use dependencies from above
+    pacman -S \
+        steam \
+        lutris \
+        prismlauncher \
+        mangohud \
+        lib32-mangohud \
+        --noconfirm && \
+        wget https://raw.githubusercontent.com/Shringe/LatencyFleX-Installer/main/install.sh -O /usr/bin/latencyflex && \
+        sed -i 's@"dxvk.conf"@"/usr/share/latencyflex/dxvk.conf"@g' /usr/bin/latencyflex && \
+        chmod +x /usr/bin/latencyflex && \
+    pacman -S --clean --clean && \
+    rm -rf /var/cache/pacman/pkg/*
 
-# Create user for AUR
+RUN useradd -m --shell=/bin/bash aur && usermod -L aur && \
+    echo "aur ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    echo "root ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# Install from AUR
+# AUR can't run as root
+USER aur
+WORKDIR /home/aur
+RUN paru -S \
+        aur/protontricks \
+        aur/lib32-gperftools \
+        aur/steamcmd \
+        aur/protonup-qt \
+        --noconfirm
+USER root
+WORKDIR /
 
-# Destroy AUR user
+RUN sed -i 's@ (Runtime)@@g' /usr/share/applications/steam.desktop && \
+    sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/makepkg.conf && \
+    userdel -r aur && \
+    rm -drf /home/aur && \
+    sed -i '/aur ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers && \
+    sed -i '/root ALL=(ALL) NOPASSWD: ALL/d' /etc/sudoers && \
+    rm -rf \
+        /home/aur/.cache/* \
+        /tmp/* \
+        /var/cache/pacman/pkg/*
 
-# Optimize
+# Create Plasma and GNOME images, differing by type of XDG portal
+FROM base AS plasma
 
-# Use chunkah
+RUN sed -i 's/-march=native -mtune=native/-march=x86-64 -mtune=generic/g' /etc/makepkg.conf && \
+    pacman -S \
+        xdg-desktop-portal-kde \
+        --noconfirm && \
+    rm -rf /var/cache/pacman/pkg/*
 
-# Export the image
+RUN sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/makepkg.conf && \
+    rm -rf \
+        /tmp/*
 
-# Take the image from Optimize
+FROM base AS gnome
 
-# Swap the portal
+RUN sed -i 's/-march=native -mtune=native/-march=x86-64 -mtune=generic/g' /etc/makepkg.conf && \
+    pacman -S \
+        xdg-desktop-portal-gtk \
+        xdg-desktop-portal-gnome \
+        --noconfirm && \
+    rm -rf /var/cache/pacman/pkg/*
 
-# Use chunkah
+RUN sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/makepkg.conf && \
+    rm -rf \
+        /tmp/*
 
-# Export the image
+# Storage and network optimization, rechunking the image        
+FROM quay.io/coreos/chunkah:latest AS chunkah-plasma
+ARG SOURCE_DATE_EPOCH
+ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
+RUN --mount=from=plasma,src=/,target=/chunkah,ro \
+    --mount=type=bind,target=/run/src,rw \
+    chunkah build \
+    --skip-special-files \
+    --max-layers 64 \
+    --label=name=gbox-plasma \
+    > /run/src/out.ociarchive
+FROM oci-archive:out.ociarchive AS gbox-plasma
+
+FROM quay.io/coreos/chunkah:latest AS chunkah-gnome
+ARG SOURCE_DATE_EPOCH
+ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
+RUN --mount=from=gnome,src=/,target=/chunkah,ro \
+    --mount=type=bind,target=/run/src,rw \
+    chunkah build \
+    --skip-special-files \
+    --max-layers 64 \
+    --label=name=gbox-gnome \
+    > /run/src/out.ociarchive
+FROM oci-archive:out.ociarchive AS gbox-gnome
