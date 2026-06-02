@@ -31,8 +31,17 @@ jobs:
             # latest
 
             - name: Generate labels
+            # title
+            # description
+            # version
+            # source
+            # licenses
+            # vendor
+            # revision
+            # base name 
 
             - name: Build image
+            # We will use buildah
 
             - name: Login to ghcr.io
 
