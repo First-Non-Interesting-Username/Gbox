@@ -19,6 +19,17 @@ jobs:
                 image_name: [gbox-plasma, gbox-gnome]
         
         steps:
+            - name: Free disk space
+              uses: jlumbroso/free-disk-space@v3
+              with:
+                tool-cache: true
+                android: true
+                dotnet: true
+                haskell: true
+                large-packages: true
+                docker-images: true
+                swap-storage: true
+
             - name: checkout
               uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
             
@@ -78,13 +89,16 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Lowercase registry owner
+              run: echo "OWNER=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+
             - name: Push to ghcr.io
               id: push
               uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
               with:
                 image: ${{ steps.build_image.outputs.image }}
                 tags: ${{ steps.build_image.outputs.tags }}
-                registry: ghcr.io/${{ github.repository_owner }}
+                registry: ghcr.io/{{ env.OWNER }}
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -94,4 +108,4 @@ jobs:
             - name: Sign image with Cosign
               run: |
                 cosign sign --yes \
-                ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
+                ghcr.io/${{ env.OWNER }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
