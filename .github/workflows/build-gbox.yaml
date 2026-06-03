@@ -27,24 +27,71 @@ jobs:
                 echo "IMAGE_NAME=${{ matrix.image_name }}" >> $GITHUB_ENV
             
             - name: Generate tags
-            # Date
-            # latest
+              id: tags
+              shell: bash
+              run: |
+                TIMESTAMP="$(date +%Y%m%d)"
+                TAGS=("${TIMESTAMP}")
+                TAGS+=("latest")
+                OUTPUT_TAGS="${TAGS[*]}"
+                echo "tags=${OUTPUT_TAGS}" >> $GITHUB_OUTPUT
 
-            - name: Generate labels
-            # title
-            # description
-            # version
-            # source
-            # licenses
-            # vendor
-            # revision
-            # base name 
+            - name: Image Metadata
+              uses: docker/metadata-action@v6
+              id: meta
+              with:
+                images: |
+                    ${{ env.IMAGE_NAME }}
+                labels: |
+                    org.opencontainers.image.title=Gbox - Gaming distroBOX
+                    org.opencontainers.image.description=Image designed for gaming in distrobox
+                    org.opencontainers.image.vendor=${{ github.repository_owner }}
+                    org.opencontainers.image.authors=${{ github.repository_owner }}
+                    org.opencontainers.image.base.name=ghcr.io/ublue-os/arch-toolbox
 
-            - name: Build image
-            # We will use buildah
+
+            - name: Compute SOURCE_DATE_EPOCH
+              id: epoch
+              run: echo "epoch=$(date -d '${{ github.event.head_commit.timestamp }}' +%s)" >> $GITHUB_OUTPUT
+
+            - name: Build Image
+              id: build_image
+              uses: redhat-actions/buildah-build@v2
+              with:
+                containerfiles: |
+                    ./Containerfile.gbox
+                image: ${{ env.IMAGE_NAME }}
+                tags: |
+                    ${{ steps.tags.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+                oci: false
+                extra-args: |
+                    --target=${{ matrix.image_name }} --security-opt=seccomp=unconfined
+                    --skip-unused-stages=false
+                build-args: |
+                    SOURCE_DATE_EPOCH=${{ steps.epoch.outputs.epoch }}
 
             - name: Login to ghcr.io
-
-            - name: Sign image with cosign
+              uses: redhat-actions/podman-login@v1
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Push to ghcr.io
+              id: push
+              uses: redhat-actions/push-to-registry@v2
+              with:
+                image: ${{ steps.build_image.outputs.image }}
+                tags: ${{ steps.build_image.outputs.tags }}
+                registry: ghcr.io/${{ github.repository_owner }}
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Install Cosign
+              uses: sigstore/cosign-installer@v3
+            
+            - name: Sign image with Cosign
+              run: |
+                cosign sign --yes \
+                ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }
