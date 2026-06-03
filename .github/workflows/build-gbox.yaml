@@ -20,7 +20,7 @@ jobs:
         
         steps:
             - name: checkout
-              uses: actions/checkout@v6
+              uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
             
             - name: Matrix Variables
               run: |
@@ -37,7 +37,7 @@ jobs:
                 echo "tags=${OUTPUT_TAGS}" >> $GITHUB_OUTPUT
 
             - name: Image Metadata
-              uses: docker/metadata-action@v6
+              uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6
               id: meta
               with:
                 images: |
@@ -56,7 +56,7 @@ jobs:
 
             - name: Build Image
               id: build_image
-              uses: redhat-actions/buildah-build@v2
+              uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
               with:
                 containerfiles: |
                     ./Containerfile.gbox
@@ -72,7 +72,7 @@ jobs:
                     SOURCE_DATE_EPOCH=${{ steps.epoch.outputs.epoch }}
 
             - name: Login to ghcr.io
-              uses: redhat-actions/podman-login@v1
+              uses: redhat-actions/podman-login@4934294ad0449894bcd1e9f191899d7292469603 # v1
               with:
                 registry: ghcr.io
                 username: ${{ github.actor }}
@@ -80,7 +80,7 @@ jobs:
 
             - name: Push to ghcr.io
               id: push
-              uses: redhat-actions/push-to-registry@v2
+              uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
               with:
                 image: ${{ steps.build_image.outputs.image }}
                 tags: ${{ steps.build_image.outputs.tags }}
@@ -89,7 +89,7 @@ jobs:
                 password: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Install Cosign
-              uses: sigstore/cosign-installer@v3
+              uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
             
             - name: Sign image with Cosign
               run: |
