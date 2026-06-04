@@ -1,5 +1,5 @@
 # Using arch as a base, because of package selection
-FROM ghcr.io/ublue-os/arch-toolbox:latest@sha256:fce942ae5a6f8e7aaf3fbe035eb42463db3f2b15422a4d8b414ad041d93e7f0f AS base
+FROM ghcr.io/ublue-os/arch-toolbox:latest@sha256:d70f83e7307752cb5b165085544979aafe5267b9736644133f88a13466e7d527 AS base
 
 RUN pacman -Syu \
         lib32-vulkan-radeon \
