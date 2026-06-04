@@ -55,7 +55,7 @@ jobs:
                     ${{ env.IMAGE_NAME }}
                 labels: |
                     org.opencontainers.image.title=Gbox - Gaming distroBOX
-                    org.opencontainers.image.description=Image designed for gaming in distrobox
+                    org.opencontainers.image.description=Personal image for gaming in distrobox
                     org.opencontainers.image.vendor=${{ github.repository_owner }}
                     org.opencontainers.image.authors=${{ github.repository_owner }}
                     org.opencontainers.image.base.name=ghcr.io/ublue-os/arch-toolbox
