@@ -63,7 +63,7 @@ if ! [[ "$ID" =~ ^[0-9]+$ ]]; then
   exit 1
 fi
 
-MANIFEST="$HOME_DIR/.steam/steam/steamapps/appmanifest_${ID}.acf"
+MANIFEST="$HOME_DIR/.steam/steam/steamapps/appmanifest_$ID.acf"
 
 if [[ ! -f "$MANIFEST" ]]; then
     echo "Error: Game $ID is NOT installed." >&2
@@ -72,12 +72,11 @@ fi
 
 # It works, until it doesn't
 ICON_HASH=$(grep -oP '"icon"\s+"\K[^"]+' "$MANIFEST")
-ICON_URL="https://media.steampowered.com/steamcommunity/public/images/apps/$ID/$ICON_HASH.jpg"
+ICON_URL="https://steamcdn-a.akamaihd.net/steam/apps/$ID/library_600x900_2x.jpg"
 ICON_PATH="/Pictures/$ID.jpg"
 
 echo "Downloading icon for game $ID"
-# I hate this so much
-distrobox enter "$CONTAINER_NAME" -- curl --create-dirs -L -o "$HOME_DIR$ICON_PATH" "$ICON_URL"
+curl --create-dirs -L -o "$HOME_DIR$ICON_PATH" "$ICON_URL"
 
 GAME_NAME=$(grep -m1 -oP '"name"\s+"\K[^"]+' "$MANIFEST")
 
@@ -100,5 +99,7 @@ Icon=$HOST_ICON_PATH
 Terminal=false
 Categories=Game
 EOF
+
+distrobox enter "$CONTAINER_NAME" -- chmod +x "$DESKTOP_ENTRY_NAME"
 
 echo "Desktop entry created, available in $DESKTOP_ENTRY_NAME for edits"
