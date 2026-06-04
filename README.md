@@ -49,13 +49,13 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 
 - AMD GPU Optimized - Vulkan drivers, VA-API, and 32-bit Steam/Proton libraries
 - Pre-installed Gaming Apps - Steam, Lutris, Heroic, Prism Launcher, SteamCMD
-- Performance Monitoring - MangoHud overlay for FPS, temps, CPU/GPU usage
 - Desktop Variants - Separate KDE Plasma and GNOME images with portal integration
 - Distrobox Ready - One-command setup with auto-exported apps and shared $HOME
+- Game Exporting - Custom script for exporting games to host desktop 
 
-## Distrobox explanation
+## export-steam-game.sh usage
 
-## Workflows
+
 
 ## Attribution
 
