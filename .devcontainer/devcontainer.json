@@ -1,14 +1,7 @@
 {
   "name": "Gbox developement",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu@sha256:bb779775cfc7d2e65f9b0f80f17770878f5a50c00d15cc873b627c5c214ce37e",
-  
-  "features": {
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1@sha256:c2c2cf829505ead8e4892c88c31b6594ae94a2bbb209e16e1fac456c1a3a624e": {
-      "version": "latest",
-      "enableNonRootDocker": true,
-      "moby": false
-    }
-  },
+
 
   "customizations": {
     "vscode": {
@@ -17,5 +10,7 @@
         "WakaTime.vscode-wakatime"
       ]
     }
-  }
+  },
+  
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y buildah"
 }
