@@ -55,7 +55,21 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 
 ## export-steam-game.sh usage
 
+There're no good ways. 
 
+```bash
+curl -fSSL https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/export-steam-game.sh | bash -s \
+# Location of container's $HOME. Defaults to host's $HOME, as in example
+--home $HOME
+# Game ID from steam
+--ID 480
+# Name of the container in distrobox. IMPORTANT: This is not name of the image
+--container-name gbox
+# Please don't do that
+# Passing this flag deletes all previously created desktop entires
+# You don't want to see that logic
+--delete-entries
+```
 
 ## Attribution
 
