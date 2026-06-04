@@ -75,14 +75,14 @@ fi
 ICON_URL="https://steamcdn-a.akamaihd.net/steam/apps/$ID/library_600x900_2x.jpg"
 ICON_PATH="/Pictures/$ID.jpg"
 
-echo "Downloading icon for game $ID"
-curl --create-dirs -L -o "$HOME_DIR""$ICON_PATH" "$ICON_URL"
-
 GAME_NAME=$(grep -m1 -oP '"name"\s+"\K[^"]+' "$MANIFEST" || true)
 if [[ -z "$GAME_NAME" ]]; then
     echo "Error: Could not read game name from manifest." >&2
     exit 1
 fi
+
+echo "Downloading icon for $GAME_NAME"
+curl --create-dirs -L -o "$HOME_DIR""$ICON_PATH" "$ICON_URL"
 
 HOST_ICON_PATH="$HOME_DIR""$ICON_PATH"
 
