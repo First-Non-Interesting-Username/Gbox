@@ -58,17 +58,17 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 There're no good ways. 
 
 ```bash
-curl -fSSL https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/export-steam-game.sh | bash -s \
-# Location of container's $HOME. Defaults to host's $HOME, as in example
---home $HOME
-# Game ID from steam
---ID 480
-# Name of the container in distrobox. IMPORTANT: This is not name of the image
---container-name gbox
-# Please don't do that
-# Passing this flag deletes all previously created desktop entires
-# You don't want to see that logic
---delete-entries
+# Setup Notes:
+# --home: Location of container's $HOME.
+# --ID: Game ID from steam (480 = Spacewar).
+# --container-name: Name of the distrobox container.
+# --delete-entries: Wipes previously created desktop entries.
+
+curl -fSSL https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/export-steam-game.sh | bash -s -- \
+  --home "$HOME" \
+  --ID 480 \
+  --container-name gbox \
+  --delete-entries
 ```
 
 ## Attribution

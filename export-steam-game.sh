@@ -10,6 +10,8 @@ CONTAINER_NAME="gbox"
 TARGET_DIR="$HOME/.local/share/applications"
 DELETE_ENTRIES=false
 
+echo "Everything is going fine"
+
 # Some random logic, which I don't really understand
 while [[ $# -gt 0 ]]; do
   case "$1" in
