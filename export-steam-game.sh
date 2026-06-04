@@ -42,6 +42,7 @@ done
 if $DELETE_ENTRIES; then
   deleted_count=0
   # I am stupid
+  shopt -s nullglob
   for file in "$TARGET_DIR"/*-*-iam-stupid-and-cant-code-deletion-logic.desktop; do
     if [[ -f "$file" ]]; then
       rm "$file"
@@ -71,16 +72,19 @@ if [[ ! -f "$MANIFEST" ]]; then
 fi
 
 # It works, until it doesn't
-ICON_HASH=$(grep -oP '"icon"\s+"\K[^"]+' "$MANIFEST")
 ICON_URL="https://steamcdn-a.akamaihd.net/steam/apps/$ID/library_600x900_2x.jpg"
 ICON_PATH="/Pictures/$ID.jpg"
 
 echo "Downloading icon for game $ID"
-curl --create-dirs -L -o "$HOME_DIR$ICON_PATH" "$ICON_URL"
+curl --create-dirs -L -o "$HOME_DIR""$ICON_PATH" "$ICON_URL"
 
-GAME_NAME=$(grep -m1 -oP '"name"\s+"\K[^"]+' "$MANIFEST")
+GAME_NAME=$(grep -m1 -oP '"name"\s+"\K[^"]+' "$MANIFEST" || true)
+if [[ -z "$GAME_NAME" ]]; then
+    echo "Error: Could not read game name from manifest." >&2
+    exit 1
+fi
 
-HOST_ICON_PATH="$HOME_DIR$ICON_PATH"
+HOST_ICON_PATH="$HOME_DIR""$ICON_PATH"
 
 mkdir -p "$TARGET_DIR"
 
