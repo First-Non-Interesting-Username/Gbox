@@ -29,6 +29,7 @@ RUN pacman -Syu \
         noto-fonts-cjk \
         glibc-locales \
         jdk21-openjdk \
+        fastfetch \
         --noconfirm && \
     # Installed separately, so they use dependencies from above
     pacman -S \
