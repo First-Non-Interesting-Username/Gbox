@@ -5,17 +5,13 @@ Thanks for your interest in contributing! Here's how to get started.
 ## Development Setup
 
 1. Fork and clone the repository
-2. Install [buildah](https://github.com/containers/buildah) for building and testing images locally
+2. Install [buildah](https://github.com/containers/buildah) for building and testing images locally (This step is not neccessary with devcontainers or devenv)
 
 ## Making Changes
 
 ### Containerfile
 
-The main image definition is in `Containerfile.gbox`. It uses a multi-stage build:
-
-- **base**: Core packages (Vulkan drivers, audio, gaming tools)
-- **plasma / gnome**: Desktop-portal-specific variants
-- **chunkah-***: Storage-optimized final images
+The main image definition is in `Containerfile.gbox`. It uses a multi-stage build.
 
 ### Files
 
