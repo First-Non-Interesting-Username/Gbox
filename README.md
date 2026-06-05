@@ -55,10 +55,11 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 
 ## export-steam-game.sh usage
 
-There're no good ways. 
+This script makes it easy to generate `.desktop` entries for games installed in the container.
+It only works with steam games, but I plan to implement it for other launchers.
 
 ```bash
-# Setup Notes:
+# Flags:
 # --home: Location of container's $HOME.
 # --ID: Game ID from steam (480 = Spacewar).
 # --container-name: Name of the distrobox container.

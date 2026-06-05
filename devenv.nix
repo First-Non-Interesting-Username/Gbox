@@ -1,3 +1,6 @@
 { pkgs, ... }: {
-  packages = [ pkgs.buildah ];
+  packages = with pkgs [ 
+    buildah
+    shellcheck
+  ];
 }

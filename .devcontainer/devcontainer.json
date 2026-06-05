@@ -12,5 +12,5 @@
     }
   },
   
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y buildah"
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y buildah shellcheck"
 }
