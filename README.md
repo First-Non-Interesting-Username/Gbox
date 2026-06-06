@@ -75,4 +75,8 @@ curl -fSSL https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox
 ## Attribution
 
 This project is a reimplementation of [Steambox](https://github.com/ublue-os/toolboxes/tree/main/toolboxes/steambox) from the ublue ecosystem.
-I used parts of their code in my implementation and the art of writing workflows and container files is in my opinion a solved programming challange, so there are a lot of similiarities between our solutions.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0 or later.
+See the [LICENSE](LICENSE) file for details.

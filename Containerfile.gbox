@@ -58,6 +58,7 @@ RUN paru -S \
         aur/steamcmd \
         aur/protonup-qt \
         aur/heroic-games-launcher-bin \
+        aur/mcaselector \
         --noconfirm
 USER root
 WORKDIR /
