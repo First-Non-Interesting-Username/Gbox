@@ -101,7 +101,7 @@ RUN sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/m
         /tmp/*
 
 # Storage and network optimization, rechunking the image        
-FROM quay.io/coreos/chunkah:latest@sha256:352097f3d32186ac11082f8b74cd544678b00388b50c96ba5c8e79503a454fe3 AS chunkah-plasma
+FROM quay.io/coreos/chunkah:latest@sha256:ff8b8b466a942ec6000445d4001fc661e2fc5a952ad9ee29b4de9ab09d1d1708 AS chunkah-plasma
 ARG SOURCE_DATE_EPOCH
 ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
 RUN --mount=from=plasma,src=/,target=/chunkah,ro \
@@ -113,7 +113,7 @@ RUN --mount=from=plasma,src=/,target=/chunkah,ro \
     > /run/src/out.ociarchive
 FROM oci-archive:out.ociarchive AS gbox-plasma
 
-FROM quay.io/coreos/chunkah:latest@sha256:352097f3d32186ac11082f8b74cd544678b00388b50c96ba5c8e79503a454fe3 AS chunkah-gnome
+FROM quay.io/coreos/chunkah:latest@sha256:ff8b8b466a942ec6000445d4001fc661e2fc5a952ad9ee29b4de9ab09d1d1708 AS chunkah-gnome
 ARG SOURCE_DATE_EPOCH
 ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
 RUN --mount=from=gnome,src=/,target=/chunkah,ro \
