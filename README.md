@@ -50,8 +50,9 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 - AMD GPU Optimized - Vulkan drivers, VA-API, and 32-bit Steam/Proton libraries
 - Pre-installed Gaming Apps - Steam, Lutris, Heroic, Prism Launcher, SteamCMD
 - Desktop Variants - Separate KDE Plasma and GNOME images with portal integration
-- Distrobox Ready - One-command setup with auto-exported apps and shared $HOME
-- Game Exporting - Custom script for exporting games to host desktop 
+- Distrobox Ready - One-command setup with auto-exported apps and shared `$HOME`
+- Game Exporting - Custom script for exporting games to host desktop
+- Minecraf Modpack - Prism Launcher preloaded with [Create: Just For Fun](https://modrinth.com/modpack/create-just-for-fun) Minecraft modpack
 
 ## export-steam-game.sh usage
 
