@@ -10,5 +10,39 @@
       "pinDigests": true,
       "automerge": false
     }
+  ],
+  "customDatasources": {
+    "packwiz-neoforge": {
+      "defaultRegistryUrlTemplate": "https://first-non-interesting-username.github.io/create-just-for-fun/pack.toml",
+      "format": "toml",
+      "transformTemplates": [
+        "{\"releases\": [{\"version\": $string(versions.neoforge)}]}"
+      ]
+    }
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update NeoForge version in mmc-pack.json from packwiz pack.toml",
+      "managerFilePatterns": ["(^|/)files/opt/prism-template/instances/mmc-pack\\.json$"],
+      "matchStrings": [
+        "\"cachedName\": \"NeoForge\",\\s*\"cachedVersion\": \"(?<currentValue>[^\"]+)\"",
+        "\"uid\": \"net\\.neoforged\"[\\s\\S]*?\"version\": \"(?<currentValue>[^\"]+)\""
+      ],
+      "depNameTemplate": "neoforged/neoforge",
+      "datasourceTemplate": "custom.packwiz-neoforge",
+      "versioningTemplate": "semver-coerced"
+    },
+    {
+      "customType": "regex",
+      "description": "Update packwiz-installer-bootstrap in Containerfile",
+      "managerFilePatterns": ["(^|/)Containerfile[^/]*$"],
+      "matchStrings": [
+        "packwiz/packwiz-installer-bootstrap/releases/download/(?<currentValue>v[^/]+)/packwiz-installer-bootstrap\\.jar"
+      ],
+      "depNameTemplate": "packwiz/packwiz-installer-bootstrap",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver-coerced"
+    }
   ]
 }

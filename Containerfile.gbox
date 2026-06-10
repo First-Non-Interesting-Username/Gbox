@@ -1,6 +1,8 @@
 # Using arch as a base, because of package selection
 FROM ghcr.io/ublue-os/arch-toolbox:latest@sha256:d70f83e7307752cb5b165085544979aafe5267b9736644133f88a13466e7d527 AS base
 
+COPY ./files /
+
 RUN pacman -Syu \
         lib32-vulkan-radeon \
         libva-mesa-driver \
@@ -62,6 +64,14 @@ RUN paru -S \
         --noconfirm
 USER root
 WORKDIR /
+
+RUN mkdir -p /opt/prism-template/instances/create-just-for-fun
+
+ADD https://github.com/packwiz/packwiz-installer-bootstrap/releases/download/v0.0.3/packwiz-installer-bootstrap.jar \
+    /opt/prism-template/instances/PackwizPack/packwiz-installer-bootstrap.jar
+
+RUN chmod +x /usr/local/bin/distrobox-init.sh
+
 
 RUN sed -i 's@ (Runtime)@@g' /usr/share/applications/steam.desktop && \
     sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/makepkg.conf && \
