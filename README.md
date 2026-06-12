@@ -23,6 +23,8 @@ distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Int
 
 You can create the container manually, using `distrobox-create` command or with visual tools such as [distroshelf](https://flathub.org/en/apps/com.ranfdev.DistroShelf).
 
+Using the distrobox assemble file is the only supported option, I reserve the right to not provide support if it has been installed with another method. 
+
 ## Description
 
 Gbox is a personal Arch based OCI image designed for gaming. It is heavily inspired by Steambox from the ublue ecosystem, but it improves upon the original, while keeping core features. 
