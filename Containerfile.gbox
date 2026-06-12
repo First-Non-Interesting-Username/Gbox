@@ -73,7 +73,8 @@ ADD https://github.com/packwiz/packwiz-installer-bootstrap/releases/download/v0.
 RUN chmod +x /usr/local/bin/prism-instance-bootstrap.sh
 
 # I'm the owner of the copyright, LOL
-RUN curl -L -o /opt/PrismLauncher/icons/create-just-for-fun-logo.jpg https://raw.githubusercontent.com/First-Non-Interesting-Username/create-just-for-fun/main/artworks/logo.jpg
+ADD https://raw.githubusercontent.com/First-Non-Interesting-Username/create-just-for-fun/main/artworks/logo.jpg \
+    /opt/PrismLauncher/icons/create-just-for-fun-logo.jpg
 
 
 RUN sed -i 's@ (Runtime)@@g' /usr/share/applications/steam.desktop && \
