@@ -71,6 +71,12 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 **Q: Will this project be abandoned?**
 **A:** I hope not, I'm a user of it myself.
 
+**Q: How to update?**
+**A:** Depends on what you mean. If you want to update packages on your image, run `paru -Syu` inside the container. 
+If you want to update the image itself, run `distrobox rm --rmi mybox` (this removes the distrobox container) and reinstall.
+Yes, distrobox doesn't offer a better option.
+Your games, saves and game launcher state *should* stay intact.
+
 ## export-steam-game.sh usage
 
 This script makes it easy to generate `.desktop` entries for games installed in the container.
