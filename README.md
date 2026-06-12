@@ -73,9 +73,20 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 
 **Q: How to update?**
 **A:** Depends on what you mean. If you want to update packages on your image, run `paru -Syu` inside the container. 
-If you want to update the image itself, run `distrobox rm --rmi mybox` (this removes the distrobox container) and reinstall.
-Yes, distrobox doesn't offer a better option.
-Your games, saves and game launcher state *should* stay intact.
+To update the image itself, remove the container and the image, then recreate the distrobox:
+
+```bash
+# Remove the container
+distrobox rm mybox
+
+# Remove the image (use whichever you have)
+podman rmi ghcr.io/first-non-interesting-username/gbox-plasma:latest
+podman rmi ghcr.io/first-non-interesting-username/gbox-gnome:latest
+```
+
+Then reinstall. Distrobox doesn't offer a better built-in option for this.
+
+Your games, saves, and game launcher state should stay intact.
 
 ## export-steam-game.sh usage
 
