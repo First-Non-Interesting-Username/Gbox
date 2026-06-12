@@ -23,6 +23,10 @@ distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Int
 
 You can create the container manually, using `distrobox-create` command or with visual tools such as [distroshelf](https://flathub.org/en/apps/com.ranfdev.DistroShelf).
 
+## Description
+
+Gbox is a personal Arch based OCI image designed for gaming. It is heavily inspired by Steambox from the ublue ecosystem, but it improves upon the original, while keeping core features. 
+
 ## Usage instructions
 
 Important commands (on host):
@@ -52,7 +56,18 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 - Desktop Variants - Separate KDE Plasma and GNOME images with portal integration
 - Distrobox Ready - One-command setup with auto-exported apps and shared `$HOME`
 - Game Exporting - Custom script for exporting games to host desktop
-- Minecraf Modpack - Prism Launcher preloaded with [Create: Just For Fun](https://modrinth.com/modpack/create-just-for-fun) Minecraft modpack
+- Minecraf Modpack - Prism Launcher preloaded with [Create: Just For Fun](https://modrinth.com/project/Oz2C6Bff) Minecraft modpack
+
+## FAQ
+
+**Q: Why use a Distrobox container for gaming instead of installing on my host OS?**
+**A:** To keep your host clean from the imperative mess which gaming is.
+
+**Q: Why Gbox over Steambox?**
+**A:** Gbox offers better support, more features and less bloat than Steambox. 
+
+**Q: Will this project be abandoned?**
+**A:** I hope not, I'm a user of it myself.
 
 ## export-steam-game.sh usage
 
