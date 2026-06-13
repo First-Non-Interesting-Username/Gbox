@@ -75,6 +75,9 @@ RUN chmod +x /usr/local/bin/prism-instance-bootstrap.sh
 # I'm the owner of the copyright, LOL
 ADD https://raw.githubusercontent.com/First-Non-Interesting-Username/create-just-for-fun/main/artworks/logo.jpg \
     /opt/PrismLauncher/icons/create-just-for-fun-logo.jpg
+    
+# The files added in the ADD steps above should be usable by everyone
+RUN chmod -R a+rX /opt/PrismLauncher
 
 
 RUN sed -i 's@ (Runtime)@@g' /usr/share/applications/steam.desktop && \
