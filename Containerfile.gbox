@@ -124,8 +124,8 @@ RUN --mount=from=plasma,src=/,target=/chunkah,ro \
     --skip-special-files \
     --max-layers 64 \
     --label=name=gbox-plasma \
-    > /run/src/out.ociarchive
-FROM oci-archive:out.ociarchive AS gbox-plasma
+    > /run/src/out-plasma.ociarchive 
+FROM oci-archive:out-plasma.ociarchive AS gbox-plasma
 
 FROM quay.io/coreos/chunkah:latest@sha256:ff8b8b466a942ec6000445d4001fc661e2fc5a952ad9ee29b4de9ab09d1d1708 AS chunkah-gnome
 ARG SOURCE_DATE_EPOCH
@@ -136,5 +136,5 @@ RUN --mount=from=gnome,src=/,target=/chunkah,ro \
     --skip-special-files \
     --max-layers 64 \
     --label=name=gbox-gnome \
-    > /run/src/out.ociarchive
-FROM oci-archive:out.ociarchive AS gbox-gnome
+    > /run/src/out-gnome.ociarchive
+FROM oci-archive:out-gnome.ociarchive AS gbox-gnome
