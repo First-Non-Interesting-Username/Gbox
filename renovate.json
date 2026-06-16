@@ -1,14 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base", "helpers:pinGitHubActionDigests"],
+  "platformAutomerge": true,
   "dockerfile": {
     "fileMatch": ["(^|/)Containerfile[^/]*$"]
   },
   "packageRules": [
     {
       "matchDatasources": ["docker"],
-      "pinDigests": true,
-      "automerge": false
+      "pinDigests": true
     }
   ],
   "customDatasources": {
