@@ -63,6 +63,7 @@ RUN paru -S \
         aur/protonup-qt \
         aur/heroic-games-launcher-bin \
         aur/mcaselector \
+        aur/greenlight-bin \
         --noconfirm
 USER root
 WORKDIR /
