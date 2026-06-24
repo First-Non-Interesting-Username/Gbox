@@ -122,23 +122,23 @@ RUN sed -i 's/-march=x86-64 -mtune=generic/-march=native -mtune=native/g' /etc/m
 FROM quay.io/coreos/chunkah:latest@sha256:ff8b8b466a942ec6000445d4001fc661e2fc5a952ad9ee29b4de9ab09d1d1708 AS chunkah-plasma
 ARG SOURCE_DATE_EPOCH
 ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
-RUN --mount=from=plasma,src=/,target=/chunkah,ro \
-    --mount=type=bind,target=/run/src,rw \
+RUN --mount=type=bind,target=/run/src,rw \
+    --mount=from=plasma,target=/chunkah,ro \
     chunkah build \
     --skip-special-files \
     --max-layers 64 \
     --label=name=gbox-plasma \
-    > /run/src/out-plasma.ociarchive 
-FROM oci-archive:out-plasma.ociarchive AS gbox-plasma
+    --output oci:/run/src/out-plasma
+FROM oci:out-plasma AS gbox-plasma
 
 FROM quay.io/coreos/chunkah:latest@sha256:ff8b8b466a942ec6000445d4001fc661e2fc5a952ad9ee29b4de9ab09d1d1708 AS chunkah-gnome
 ARG SOURCE_DATE_EPOCH
 ENV SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}
-RUN --mount=from=gnome,src=/,target=/chunkah,ro \
-    --mount=type=bind,target=/run/src,rw \
+RUN --mount=type=bind,target=/run/src,rw \
+    --mount=from=gnome,target=/chunkah,ro \
     chunkah build \
     --skip-special-files \
     --max-layers 64 \
     --label=name=gbox-gnome \
-    > /run/src/out-gnome.ociarchive
-FROM oci-archive:out-gnome.ociarchive AS gbox-gnome
+    --output oci:/run/src/out-gnome
+FROM oci:out-gnome AS gbox-gnome

@@ -77,7 +77,7 @@ jobs:
                 labels: ${{ steps.meta.outputs.labels }}
                 oci: false
                 extra-args: |
-                    --target=${{ matrix.image_name }} --security-opt=seccomp=unconfined
+                    --target=${{ matrix.image_name }} --security-opt=seccomp=unconfined --security-opt=label=disable
                     --skip-unused-stages=false
                 build-args: |
                     SOURCE_DATE_EPOCH=${{ steps.epoch.outputs.epoch }}
