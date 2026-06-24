@@ -92,6 +92,8 @@ RUN sed -i 's@ (Runtime)@@g' /usr/share/applications/steam.desktop && \
         /tmp/* \
         /var/cache/pacman/pkg/*
 
+ENV STEAM_NO_CEF_SANDBOX=1
+
 # Create Plasma and GNOME images, differing by type of XDG portal
 FROM base AS plasma
 
