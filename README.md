@@ -8,17 +8,27 @@ Personal Gaming distroBOX OCI image.
 ## Quick start
 
 > [!NOTE]
-> This project targets AMD GPUs. GPUs from other vendors aren't supported, but may work with tinkering.
+> This project provides optimized builds for AMD, NVIDIA, and Intel GPUs.
 > You may have bad experience with DEs other than GNOME and Plasma.
 
 Make sure [distrobox](https://distrobox.it/) with dependencies is installed on your system.
 To assemble the distrobox with reccommended settings run the follwing command:
 
 ```bash
-# For Plasma
-distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/plasma.ini
-# For GNOME
-distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/gnome.ini
+# For Plasma AMD
+distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/plasma-amd.ini
+# For GNOME AMD
+distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/gnome-amd.ini
+
+# For Plasma Intel
+distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/plasma-intel.ini
+# For GNOME Intel
+distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/gnome-intel.ini
+
+# For Plasma Nvidia
+distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/plasma-nvidia.ini
+# For GNOME Nvidia
+distrobox-assemble create --file https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/distrobox/gnome-nvidia.ini
 ```
 
 You can create the container manually, using `distrobox-create` command or with visual tools such as [distroshelf](https://flathub.org/en/apps/com.ranfdev.DistroShelf).
@@ -53,7 +63,7 @@ For further informations refer to [distrobox docs](https://distrobox.it/).
 
 ## Features
 
-- AMD GPU Optimized - Vulkan drivers, VA-API, and 32-bit Steam/Proton libraries
+- Multi-Vendor GPU Optimized - Separate builds (`-amd`, `-nvidia`, `-intel`) with proper Vulkan drivers, VA-API, and 32-bit libraries
 - Pre-installed Gaming Apps - Steam, Lutris, Heroic, Prism Launcher, SteamCMD
 - Desktop Variants - Separate KDE Plasma and GNOME images with portal integration
 - Distrobox Ready - One-command setup with auto-exported apps and shared `$HOME`
@@ -80,8 +90,7 @@ To update the image itself, remove the container and the image, then recreate th
 distrobox rm mybox
 
 # Remove the image (use whichever you have)
-podman rmi ghcr.io/first-non-interesting-username/gbox-plasma:latest
-podman rmi ghcr.io/first-non-interesting-username/gbox-gnome:latest
+podman rmi ghcr.io/first-non-interesting-username/gbox-{DE}-{GPU}:latest
 ```
 
 Then reinstall. Distrobox doesn't offer a better built-in option for this.

@@ -16,7 +16,8 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                image_name: [gbox-plasma, gbox-gnome]
+                de: [plasma, gnome]
+                gpu: [amd, nvidia, intel]
         
         steps:
             - name: Free disk space
@@ -35,7 +36,7 @@ jobs:
             
             - name: Matrix Variables
               run: |
-                echo "IMAGE_NAME=${{ matrix.image_name }}" >> $GITHUB_ENV
+                echo "IMAGE_NAME=gbox-${{ matrix.de }}-${{ matrix.gpu }}" >> $GITHUB_ENV
             
             - name: Generate tags
               id: tags
@@ -77,10 +78,12 @@ jobs:
                 labels: ${{ steps.meta.outputs.labels }}
                 oci: false
                 extra-args: |
-                    --target=${{ matrix.image_name }} --security-opt=seccomp=unconfined --security-opt=label=disable
+                    --target=gbox-${{ matrix.de }} --security-opt=seccomp=unconfined --security-opt=label=disable
                     --skip-unused-stages=false
                 build-args: |
                     SOURCE_DATE_EPOCH=${{ steps.epoch.outputs.epoch }}
+                    GPU_VENDOR=${{ matrix.gpu }}
+                    IMAGE_NAME=${{ env.IMAGE_NAME }}
 
             - name: Login to ghcr.io
               uses: redhat-actions/podman-login@4934294ad0449894bcd1e9f191899d7292469603 # v1
