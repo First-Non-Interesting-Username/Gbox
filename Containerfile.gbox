@@ -33,6 +33,8 @@ RUN pacman -Syu \
         glibc-locales \
         jdk21-openjdk \
         fastfetch \
+        obs-vkcapture \
+        lib32-obs-vkcapture \
         --noconfirm && \
     # Installed separately, so they use dependencies from above
     pacman -S \
@@ -64,6 +66,7 @@ RUN paru -S \
         aur/heroic-games-launcher-bin \
         aur/mcaselector \
         aur/greenlight-bin \
+        aur/goverlay-git \
         --noconfirm
 USER root
 WORKDIR /
