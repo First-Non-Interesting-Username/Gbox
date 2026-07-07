@@ -38,8 +38,6 @@ RUN case "${GPU_VENDOR}" in \
         glibc-locales \
         jdk21-openjdk \
         fastfetch \
-        obs-vkcapture \
-        lib32-obs-vkcapture \
         --noconfirm && \
     # Installed separately, so they use dependencies from above
     pacman -S \
@@ -72,6 +70,8 @@ RUN paru -S \
         aur/heroic-games-launcher-bin \
         aur/mcaselector \
         aur/greenlight-bin \
+        aur/obs-vkcapture \
+        lib32-obs-vkcapture \
         --noconfirm
 USER root
 WORKDIR /
