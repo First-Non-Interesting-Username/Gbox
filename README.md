@@ -87,7 +87,7 @@ To update the image itself, remove the container and the image, then recreate th
 
 ```bash
 # Remove the container
-distrobox rm gbox
+distrobox rm Gbox
 
 # Remove the image (use whichever you have)
 podman rmi ghcr.io/first-non-interesting-username/gbox-{DE}-{GPU}:latest
@@ -112,7 +112,7 @@ It only works with steam games, but I plan to implement it for other launchers.
 curl -fSSL https://raw.githubusercontent.com/First-Non-Interesting-Username/Gbox/main/export-steam-game.sh | bash -s -- \
   --home "$HOME" \
   --ID 480 \
-  --container-name gbox \
+  --container-name Gbox \
   --delete-entries
 ```
 
