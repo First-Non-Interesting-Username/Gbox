@@ -87,7 +87,7 @@ To update the image itself, remove the container and the image, then recreate th
 
 ```bash
 # Remove the container
-distrobox rm mybox
+distrobox rm gbox
 
 # Remove the image (use whichever you have)
 podman rmi ghcr.io/first-non-interesting-username/gbox-{DE}-{GPU}:latest
