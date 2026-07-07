@@ -141,6 +141,7 @@ RUN --mount=type=bind,target=/run/src,rw \
     --label=name=${IMAGE_NAME} \
     --output oci:/run/src/out-plasma
 FROM oci:out-plasma AS gbox-plasma
+RUN --mount=type=bind,from=chunkah-plasma,target=/tmp/chunkah-dependency true
 
 FROM quay.io/coreos/chunkah:latest@sha256:ff8b8b466a942ec6000445d4001fc661e2fc5a952ad9ee29b4de9ab09d1d1708 AS chunkah-gnome
 ARG SOURCE_DATE_EPOCH
@@ -154,3 +155,4 @@ RUN --mount=type=bind,target=/run/src,rw \
     --label=name=${IMAGE_NAME} \
     --output oci:/run/src/out-gnome
 FROM oci:out-gnome AS gbox-gnome
+RUN --mount=type=bind,from=chunkah-gnome,target=/tmp/chunkah-dependency true
