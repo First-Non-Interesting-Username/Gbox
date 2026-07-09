@@ -38,21 +38,6 @@ jobs:
         run: |
           echo "IMAGE_NAME=gbox-${{ matrix.de }}-${{ matrix.gpu }}" >> $GITHUB_ENV
 
-      - name: Move buildah storage to /mnt
-        run: |
-          sudo mkdir -p /mnt/buildah/storage /mnt/buildah/tmp
-          sudo chown -R "$(id -u):$(id -g)" /mnt/buildah
-          printf '[storage]\ngraphroot = "/mnt/buildah/storage"\nrunroot = "/mnt/buildah/storage"\nimage_copy_tmp_dir = "/mnt/buildah/tmp"\n' | sudo tee /mnt/buildah/storage.conf > /dev/null
-          sudo chown "$(id -u):$(id -g)" /mnt/buildah/storage.conf
-          sudo sed -i 's#^graphroot = .*#graphroot = "/mnt/buildah/storage"#' /etc/containers/storage.conf || true
-          sudo sed -i 's#^runroot = .*#runroot = "/mnt/buildah/storage"#' /etc/containers/storage.conf || true
-          sudo sh -c 'echo "image_copy_tmp_dir = \"/mnt/buildah/tmp\"" >> /etc/containers/storage.conf' || true
-          echo "CONTAINERS_STORAGE_CONF=/mnt/buildah/storage.conf" >> "$GITHUB_ENV"
-          echo "TMPDIR=/mnt/buildah/tmp" >> "$GITHUB_ENV"
-
-      - name: Show disk usage
-        run: df -h / /mnt
-
       - name: Generate tags
         id: tags
         shell: bash
