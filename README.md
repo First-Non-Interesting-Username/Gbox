@@ -5,6 +5,10 @@
 
 Personal Gaming distroBOX OCI image.
 
+## Video showcase
+
+https://github.com/user-attachments/assets/7e0156ef-a404-4b5a-bcb2-c96ebaff5cf7
+
 ## Quick start
 
 > [!NOTE]
